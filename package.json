@@ -1,0 +1,25 @@
+{
+  "name": "project3-book-managment",
+  "version": "1.0.0",
+  "description": "## Project - Books Management",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bhushan1707/project3-book-Managment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bhushan1707/project3-book-Managment/issues"
+  },
+  "homepage": "https://github.com/Bhushan1707/project3-book-Managment#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.4.3",
+    "nodemon": "^2.0.19"
+  }
+}
