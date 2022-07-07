@@ -43,7 +43,7 @@ const createUser = async function (req, res) {
             return res.status(400).send({ status: false, message: "Password length should be alphanumeric with 8-15 characters, should contain at least one lowercase, one uppercase and one special character." })
 
         if (data.address) {
-            if (!isValid(street) || !isValid(city) || !isValid(pincode))
+            if (!isValid(data.address.street) || !isValid(data.address.city) || !isValid(data.address.pincode))
                 return res.status(400).send({ status: false, message: "Enter the street, city and pincode in the address." })
             let pinValidated = pinValidator.validate(data.address.pincode)
             if (!pinValidated) return res.status(400).send({ status: false, message: "Please enter a valid pincode." })
@@ -64,9 +64,6 @@ const loginUser = async function (req, res) {
         let password = req.body.password
         if ( !email || !password ) return res.status(400).send({ status: false, msg: "Provide the email and password to login." })  // if either email, password or both not present in the request body.
 
-        // let validEmail = validator.validate(email)  // to validate the email by the use of package
-        // if ( validEmail == false ) return res.status(400).send({ status: false, msg: "Email is not valid."})  // if email is not validated.
-
         if (!emailRegex.test(email))  // --> email should be provided in right format
             return res.status(400).send({ status: false, message: "Please enter a valid emailId. ⚠️" })
 
@@ -82,13 +79,10 @@ const loginUser = async function (req, res) {
             "avinash-bhushan-yogesh-bhavye"                         // --> secret key
         )
 
-        let decodedToken = jwt.verify(token, 'avinash-bhushan-yogesh-bhavye')
-        // console.log(token);
-        console.log(decodedToken);
         res.setHeader("x-api-key", token)  // to send the token in the header of the browser used by the user.
-        res.status(200).send({ status: true, message: 'Success', data: token })  // token is shown in the response body.
+        return res.status(200).send({ status: true, message: 'Success', data: token })  // token is shown in the response body.
     } catch (err) {
-        res.status(500).send({ status: false, err: err.message })
+        return res.status(500).send({ status: false, err: err.message })
     }
 }
 

@@ -16,9 +16,6 @@ let nameRegex = /^[.a-zA-Z\s]+$/
 // let linkRegex = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/
 let emailRegex = /^[a-z]{1}[a-z0-9._]{1,100}[@]{1}[a-z]{2,15}[.]{1}[a-z]{2,10}$/
 let phoneRegex = /^(\+91[\-\s]?)?[0]?(91)?[6789]\d{9}$/
-
-// let passwordRegex = (?m)(?<!\S)\S{8,20}(?!\S)
-
 let passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/
 
 
