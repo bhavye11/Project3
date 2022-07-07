@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");  // importing the jsonwebtoken so as to authenticate and authorize the user.
 const userModel = require("../models/userModel");
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const bookModel = require("../models/bookModel");
 
 
 const authenticate = async function (req, res, next) {
@@ -38,4 +39,20 @@ const authorize = async function (req, res, next) {
 }
 
 
-module.exports = { authenticate, authorize }
+
+const authForUpdate = async function (req, res, next) {
+    try {
+        let bookId = req.params.bookId
+        if (!bookId || !mongoose.Types.ObjectId.isValid(bookId)) return res.status(400).send({ status: false, message: "Provide a valid bookId in path params." })
+        let book = await bookModel.findById(bookId)
+        if (!book) return res.status(404).send({ status: false, message: "bookId not present." })
+        if (book.userId.toString() !== req.decodedToken.userId) return res.status(401).send({ status: false, msg: "You are not authorized to access this book." })
+        next()
+    } catch (err) {
+        return res.status(500).send({ status: false, message: err.message })
+    }
+}   
+
+
+
+module.exports = { authenticate, authorize, authForUpdate }
