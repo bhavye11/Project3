@@ -18,5 +18,8 @@ let emailRegex = /^[a-z]{1}[a-z0-9._]{1,100}[@]{1}[a-z]{2,15}[.]{1}[a-z]{2,10}$/
 let phoneRegex = /^(\+91[\-\s]?)?[0]?(91)?[6789]\d{9}$/
 let passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/
 
+let isbnRegex = /^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/
+// ^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$
 
-module.exports = { isValid, isValidTitle,  nameRegex, emailRegex, phoneRegex, passRegex }  // --> exporting the variables defined in the module
+
+module.exports = { isValid, isValidTitle,  nameRegex, emailRegex, phoneRegex, passRegex, isbnRegex }  // --> exporting the variables defined in the module
