@@ -14,6 +14,8 @@ router.get('/books', commonMid.authenticate, bookController.getBooks)
 
 router.get('/books/:bookId', commonMid.authenticate, bookController.getBookById)
 
-router.put('/books/:bookId', commonMid.authenticate, commonMid.authForUpdate, bookController.updateById)
+router.put('/books/:bookId', commonMid.authenticate, commonMid.authForParams, bookController.updateById)
+
+router.delete('/books/:bookId', commonMid.authenticate, commonMid.authForParams, bookController.deleteById)
 
 module.exports = router

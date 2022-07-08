@@ -40,13 +40,13 @@ const authorize = async function (req, res, next) {
 
 
 
-const authForUpdate = async function (req, res, next) {
+const authForParams = async function (req, res, next) {
     try {
         let bookId = req.params.bookId
         if (!bookId || !mongoose.Types.ObjectId.isValid(bookId)) return res.status(400).send({ status: false, message: "Provide a valid bookId in path params." })
         let book = await bookModel.findById(bookId)
         if (!book) return res.status(404).send({ status: false, message: "bookId not present." })
-        if (book.userId.toString() !== req.decodedToken.userId) return res.status(401).send({ status: false, msg: "You are not authorized to access this book." })
+        if (book.userId.toString() !== req.decodedToken.userId) return res.status(401).send({ status: false, message: "You are not authorized to access this book." })
         next()
     } catch (err) {
         return res.status(500).send({ status: false, message: err.message })
@@ -55,4 +55,4 @@ const authForUpdate = async function (req, res, next) {
 
 
 
-module.exports = { authenticate, authorize, authForUpdate }
+module.exports = { authenticate, authorize, authForParams }

@@ -10,6 +10,24 @@ const isValidTitle = function (title) {
 }
 
 
+function dynamicSort(property) {
+    var sortOrder = 1;
+
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+
+    return function (a, b) {
+        if(sortOrder == -1){
+            return b[property].localeCompare(a[property]);
+        }else{
+            return a[property].localeCompare(b[property]);
+        }        
+    }
+}
+
+
 // Regex(s) used for the validation of different keys
 let nameRegex = /^[.a-zA-Z\s]+$/
 let emailRegex = /^[a-z]{1}[a-z0-9._]{1,100}[@]{1}[a-z]{2,15}[.]{1}[a-z]{2,10}$/
@@ -20,4 +38,4 @@ let dateRegex = /^((17|18|19|20)\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
 // let dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
 
 
-module.exports = { isValid, isValidTitle,  nameRegex, emailRegex, phoneRegex, passRegex, isbnRegex, dateRegex }  // --> exporting the variables defined in the module
+module.exports = { isValid, isValidTitle, dynamicSort, nameRegex, emailRegex, phoneRegex, passRegex, isbnRegex, dateRegex }  // --> exporting the variables defined in the module
