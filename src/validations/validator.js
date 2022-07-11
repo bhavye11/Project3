@@ -5,6 +5,7 @@ const isValid = function (value) {
     return true;
 }
 
+
 const isValidTitle = function (title) {
     return ['Mr', 'Mrs', 'Miss'].indexOf(title) !== -1
 }
@@ -38,4 +39,5 @@ let dateRegex = /^((17|18|19|20)\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
 // let dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
 
 
-module.exports = { isValid, isValidTitle, dynamicSort, nameRegex, emailRegex, phoneRegex, passRegex, isbnRegex, dateRegex }  // --> exporting the variables defined in the module
+// exporting the variables defined in the module
+module.exports = { isValid, isValidTitle, dynamicSort, nameRegex, emailRegex, phoneRegex, passRegex, isbnRegex, dateRegex }

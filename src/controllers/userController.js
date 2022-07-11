@@ -4,12 +4,13 @@ const pinValidator = require('pincode-validator')
 const { isValid, isValidTitle, nameRegex, emailRegex, phoneRegex, passRegex } = require("../validations/validator")
 
 
+
 const createUser = async function (req, res) {
     try {
         let data = req.body
         if (Object.keys(data).length === 0) return res.status(400).send({ status: false, message: "Provide the data in request body." })
 
-        const { title, name, phone, email, password } = data
+        let { title, name, phone, email, password } = data
 
         if ( !isValid(title) || !isValidTitle(title.trim()) )  // --> title should be provided in the body
             return res.status(400).send({ status: false, message: "Please enter the title ('Mr', 'Miss', 'Mrs'). ⚠️" })
@@ -18,6 +19,7 @@ const createUser = async function (req, res) {
             return res.status(400).send({ status: false, message: "Please enter the user name. ⚠️" })
         if (!nameRegex.test(name))  // --> name should be provided in right format
             return res.status(400).send({ status: false, message: "name should contain alphabets only. ⚠️" })
+        data.name = data.name.split(' ').map(x => x[0].toUpperCase() + x.slice(1, x.length).toLowerCase()).join(' ')
 
         if (!isValid(phone))  // --> phone number should be provided in the body
             return res.status(400).send({ status: false, message: "Please enter the phone number. ⚠️" })
