@@ -1,10 +1,12 @@
 const bookModel = require("../models/bookModel")  // importing the module that contains the book schema
 const userModel = require("../models/userModel")  // importing the module that contains the user schema
 const mongoose = require('mongoose')
-const { isValid, dynamicSort, isbnRegex, dateRegex } = require("../validations/validator")
+const { isValid, isbnRegex, dateRegex } = require("../validations/validator")
 const reviewModel = require("../models/reviewModel")
 
 
+
+// ==> POST api : to create a book
 
 const createBook = async function (req, res) {
     try {
@@ -23,7 +25,7 @@ const createBook = async function (req, res) {
             return res.status(400).send({ status: false, message: `Enter the following mandatory field(s): ${x}` })  // ${} --> template literal
 
         let titlePresent = await bookModel.findOne({ title: title })
-        if (titlePresent) return res.status(400).send({ status: false, message: "The title is already in use. (already present)" })
+        if (titlePresent) return res.status(400).send({ status: false, message: "The title is already in use. Please provide another one." })
 
         ISBN = ISBN.replace(/-/g, '')
         if (!isbnRegex.test(ISBN))  // --> ISBN should be provided in right format
@@ -34,6 +36,7 @@ const createBook = async function (req, res) {
         if (!dateRegex.test(releasedAt))
             return res.status(400).send({ status: false, message: 'Please enter the releasedAt date in "YYYY-MM-DD" format from 18th century and onwards. ⚠️' })
 
+        data.ISBN = ISBN
         if (!data.isDeleted || data.isDeleted === false) {
             data.deletedAt = null
         } else data.deletedAt = new Date()
@@ -46,6 +49,8 @@ const createBook = async function (req, res) {
 
 
 
+// ==> GET api : to get the undeleted books with or without filters
+
 const getBooks = async function (req, res) {
     try {
         let filters = req.query  // filters are provided in the query params
@@ -55,8 +60,8 @@ const getBooks = async function (req, res) {
 
         // if no undeleted book is found as per the request made
         if (getBooks.length === 0) return res.status(404).send({ status: false, message: `No such book exists as per the request made.` })
-        // getBooks.sort(dynamicSort('title'))  // --> to sort the array alphabetically by book name.
-        getBooks.sort((a, b) => a.title.localeCompare(b.title))
+        getBooks.sort((a, b) => a.title.localeCompare(b.title))  
+
         return res.status(200).send({ status: true, message: 'Books list', data: getBooks })  // --> existing books are reflected in the response body.
     } catch (err) {
         return res.status(500).send({ status: false, message: err.message })
@@ -64,6 +69,8 @@ const getBooks = async function (req, res) {
 }
 
 
+
+// ==> GET api : to get a book by its id along with its review data
 
 const getBookById = async function (req, res) {
     try {
@@ -77,7 +84,7 @@ const getBookById = async function (req, res) {
         if (!book) return res.status(404).send({ status: false, message: "No such book found in the database." })
         if (book.isDeleted === true) return res.status(400).send({ status: false, message: "This book has already been deleted." })
 
-        let reviews = await reviewModel.find({ bookId: book, isDeleted: false })
+        let reviews = await reviewModel.find({ bookId: book, isDeleted: false }).select({ bookId: 1, reviewedBy: 1, reviewedAt: 1, rating: 1, review: 1 })
         book.reviewsData = reviews
         return res.status(200).send({ status: true, message: "Success", data: book })
     } catch (err) {
@@ -86,6 +93,8 @@ const getBookById = async function (req, res) {
 }
 
 
+
+// ==> PUT api : to update a book by its id
 
 const updateById = async function (req, res) {
     try {
@@ -114,7 +123,7 @@ const updateById = async function (req, res) {
 
         let updatedBook = await bookModel.findOneAndUpdate(
             { _id: req.params.bookId },
-            { $set: { title: title, excerpt: excerpt, releasedAt: releasedAt, ISBN: ISBN } },
+            { $set: { title: title, excerpt: excerpt, releasedAt: releasedAt, ISBN: ISBN.replace(/-/g, '') } },
             { new: true }
         )
         return res.status(200).send({ status: true, message: 'Success', data: updatedBook })
@@ -124,6 +133,8 @@ const updateById = async function (req, res) {
 }
 
 
+
+// ==> DELETE api : to delete a book by its id
 
 const deleteById = async function (req, res) {
     try {
@@ -142,4 +153,4 @@ const deleteById = async function (req, res) {
 
 
 
-module.exports = { createBook, getBooks, getBookById, updateById, deleteById }
+module.exports = { createBook, getBooks, getBookById, updateById, deleteById }  // --> exporting the functions

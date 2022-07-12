@@ -5,6 +5,8 @@ const { isValid, isValidTitle, nameRegex, emailRegex, phoneRegex, passRegex } = 
 
 
 
+// ==> POST api : to create a user
+
 const createUser = async function (req, res) {
     try {
         let data = req.body
@@ -26,7 +28,7 @@ const createUser = async function (req, res) {
         if (!phoneRegex.test(phone))  // --> phone number should be provided in right format
             return res.status(400).send({ status: false, message: "Enter the phone number in valid Indian format. ⚠️" })
         let getPhone = await userModel.findOne({ phone: phone });  // --> to check if provided phone number is already present in the database
-        if (getPhone) {  // --> if that mobile number is already provided in the database
+        if (getPhone) {  // --> if that phone number is already provided in the database
             return res.status(400).send({ status: false, message: "Phone number is already in use, please enter a new one. ⚠️" });
         }
         
@@ -60,6 +62,8 @@ const createUser = async function (req, res) {
 
 
 
+// ==> POST api : login for a user
+
 const loginUser = async function (req, res) {
     try {
         let email = req.body.email
@@ -70,15 +74,15 @@ const loginUser = async function (req, res) {
             return res.status(400).send({ status: false, message: "Please enter a valid emailId. ⚠️" })
 
         let user = await userModel.findOne( { email: email, password: password } )  // to find that particular user document.
-        if ( !user ) return res.status(403).send({ status: false, msg: "Email or password is incorrect." })  // if the user document isn't found in the database.
+        if ( !user ) return res.status(401).send({ status: false, msg: "Email or password is incorrect." })  // if the user document isn't found in the database.
 
         let token = jwt.sign(  // --> to generate the jwt token
             {
-                userId: user._id.toString(),                        // --> payload
-                exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                userId: user._id.toString(),                            // --> payload
+                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 2),     // --> expiry set for 2 hours
                 iat: Math.floor(Date.now() / 1000)
             },
-            "avinash-bhushan-yogesh-bhavye"                         // --> secret key
+            "avinash-bhushan-yogesh-bhavye"                             // --> secret key
         )
 
         res.setHeader("x-api-key", token)  // to send the token in the header of the browser used by the user.
@@ -89,4 +93,5 @@ const loginUser = async function (req, res) {
 }
 
 
-module.exports = { createUser, loginUser }
+
+module.exports = { createUser, loginUser }  // --> exporting the functions
