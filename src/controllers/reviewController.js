@@ -15,7 +15,7 @@ const addReview = async function (req, res) {
 
         let reviewData = req.body
         let { review, rating, reviewedBy } = reviewData
-        if (Object.keys(reviewData).length === 0) return res.status(00).send({ status: false, message: "Provide the data in body to add review."})
+        if (Object.keys(reviewData).length === 0) return res.status(400).send({ status: false, message: "Provide the data in body to add review."})
 
         if (!rating) return res.status(400).send({ status: false, message: "Give the rating to the book from 0 to 5 to add a review." })
         if ( !(/^[0-5]$/.test(rating)) ) return res.status(400).send({ status: false, message: "Rating can attain the value [0-5] with no decimal."})
