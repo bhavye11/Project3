@@ -13,6 +13,7 @@ const bookSchema = new mongoose.Schema({
     deletedAt: { type: Date }, 
     isDeleted: { type: Boolean, default: false },
     releasedAt: { type: Date, required: true }
+    // bookCover: { type: String, required: true }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Book', bookSchema)  // --> mongoose creates the model using the schema

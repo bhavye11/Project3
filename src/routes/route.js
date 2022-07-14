@@ -14,6 +14,7 @@ router.post('/login', userController.loginUser)  // --> login for a user
 
 // Books APIs
 
+router.post('/generateURL', bookController.generateURL)  // --> to generate bookCover URL
 router.post('/books', commonMid.authenticate, commonMid.authorize, bookController.createBook)  // --> to create a book
 router.get('/books', commonMid.authenticate, bookController.getBooks)  // --> to get books
 router.get('/books/:bookId', commonMid.authenticate, bookController.getBookById)  // --> to get a book by its id
