@@ -1,4 +1,4 @@
-// a function is defined to validate the data provided in the request body
+// ==> a function is defined to validate the data provided in the request body
 const isValid = function (value) {
     if (typeof value === 'undefined' || value === null) return false
     if (typeof value === 'string' && value.trim().length === 0) return false
@@ -6,7 +6,7 @@ const isValid = function (value) {
 }
 
 
-// a function is defined to validate the title provided in the request body
+// ==> A function is defined to validate the title provided in the request body
 const isValidTitle = function (title) {
     return ['Mr', 'Mrs', 'Miss'].indexOf(title) !== -1
 }

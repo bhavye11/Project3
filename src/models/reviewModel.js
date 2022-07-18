@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");  // --> mongoose module is imported
-const objectId = mongoose.Schema.Types.ObjectId  // --> syntax to refer an userId in a book
+const mongoose = require("mongoose");  // ==> mongoose module is imported
+const objectId = mongoose.Schema.Types.ObjectId  // ==> syntax to refer an userId in a book
 
-// to define a format (schema) to create/add a review in the database
+// ==> To define a format (schema) to create/add a review in the database
 const reviewSchema = new mongoose.Schema({
     bookId: { type: objectId, required: true, ref: "Book" },
     reviewedBy: { type: String, default: 'Guest', trim: true },

@@ -5,6 +5,7 @@ const { isValid, isbnRegex, dateRegex } = require("../validations/validator")
 const reviewModel = require("../models/reviewModel")
 const aws= require("aws-sdk")
 
+// ==> AWS S3
 
 aws.config.update({
     accessKeyId: "AKIAY3L35MCRVFM24Q7U",
@@ -15,7 +16,7 @@ aws.config.update({
 
 let uploadFile = async (file) => {
    return new Promise( function (resolve, reject) {
-    // this function will upload file to aws and return the link
+    // ==> this function will upload file to aws and return the link
     let s3= new aws.S3({apiVersion: '2006-03-01'}); // we will be using the s3 service of aws
 
     var uploadParams= {

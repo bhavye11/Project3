@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");  // importing the jsonwebtoken so as to authenticate and authorize the user.
+const jwt = require("jsonwebtoken");  // ==> importing the jsonwebtoken so as to authenticate and authorize the user.
 const userModel = require("../models/userModel");
 const mongoose = require('mongoose');
 const bookModel = require("../models/bookModel");
@@ -27,7 +27,7 @@ const authenticate = async function (req, res, next) {
         if (!decodedToken) return res.status(403).send({ status: false, message: "invalid token" })
         req.decodedToken = decodedToken
 
-        next()  // --> next function is called after successful verification of the token, either another middleware (in case of PUT and DELETE api) or root handler function.
+        next()  // ==> next function is called after successful verification of the token, either another middleware (in case of PUT and DELETE api) or root handler function.
     } catch (err) {
         return res.status(500).send( { status: false, error: err.message} )
     }

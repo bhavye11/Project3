@@ -12,17 +12,17 @@ router.post('/register', userController.createUser)  // --> to create a user
 router.post('/login', userController.loginUser)  // --> login for a user
 
 
-// Books APIs
+// ==> Books APIs
 
 router.post('/generateURL', bookController.generateURL)  // --> to generate bookCover URL
 router.post('/books', commonMid.authenticate, commonMid.authorize, bookController.createBook)  // --> to create a book
 router.get('/books', commonMid.authenticate, bookController.getBooks)  // --> to get books
 router.get('/books/:bookId', commonMid.authenticate, bookController.getBookById)  // --> to get a book by its id
-router.put('/books/:bookId', commonMid.authenticate, commonMid.authForParams, bookController.updateById)  // --> to update a book
+router.put('/books/:bookId', commonMid.authenticate, commonMid.authForParams, bookController.updateById)  // ==> to update a book
 router.delete('/books/:bookId', commonMid.authenticate, commonMid.authForParams, bookController.deleteById)  // --> to delete a book
 
 
-// Review APIs
+// ==> Review APIs
 
 router.post('/books/:bookId/review', reviewController.addReview)  // --> to create/add a review
 router.put('/books/:bookId/review/:reviewId', reviewController.updateReview)  // --> to update a review

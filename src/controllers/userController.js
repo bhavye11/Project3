@@ -1,11 +1,11 @@
-const userModel = require("../models/userModel")  // importing the module that contains the user schema
+const userModel = require("../models/userModel")  // ==> importing the module that contains the user schema
 const jwt = require('jsonwebtoken')
 const pinValidator = require('pincode-validator')
 const { isValid, isValidTitle, nameRegex, emailRegex, phoneRegex, passRegex } = require("../validations/validator")
 
 
 
-// ==> POST api : to create a user
+// ==> POST api : To create a user
 
 const createUser = async function (req, res) {
     try {
@@ -14,7 +14,7 @@ const createUser = async function (req, res) {
 
         let { title, name, phone, email, password } = data
 
-        if ( !isValid(title) || !isValidTitle(title.trim()) )  // --> title should be provided in the body
+        if ( !isValid(title) || !isValidTitle(title.trim()) )  // ==> title should be provided in the body
             return res.status(400).send({ status: false, message: "Please enter the title ('Mr', 'Miss', 'Mrs'). ⚠️" })
 
         if (!isValid(name))  // --> name should be provided in the body

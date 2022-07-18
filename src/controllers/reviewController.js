@@ -4,7 +4,7 @@ const reviewModel = require("../models/reviewModel")
 
 
 
-// ==> POST api : to add/create a review for a book
+// ==> POST api : To add/create a review for a book
 
 const addReview = async function (req, res) {
     try {
@@ -40,7 +40,7 @@ const addReview = async function (req, res) {
 
 
 
-// ==> PUT api : to update a review
+// ==> PUT api : To update a review
 
 const updateReview = async function (req, res) {
     try {
@@ -107,4 +107,4 @@ const delReview = async function (req, res) {
 
 
 
-module.exports = { addReview, updateReview, delReview }  // --> exporting the functions
+module.exports = { addReview, updateReview, delReview }  // ==> exporting the functions
