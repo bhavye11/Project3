@@ -9,11 +9,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer().any())
 
-
+//
 mongoose.connect("mongodb+srv://yogesh_beldar:Oh9CU4nZCayFGTeC@cluster0.zveoo.mongodb.net/group16Database", {
     useNewUrlParser: true
 })
-.then( () => console.log("MongoDb is connected 💯 ✅"))
+.then( () => console.log("MongoDb is connected"))
 .catch ( err => console.log(err) )
 
 app.use('/', route)
